@@ -1,18 +1,22 @@
 #include <Arduino.h>
 
 // put function declarations here:
-int myFunction(int, int);
+int BlueLedPin = 2;
+
+void LaserPulse(int pin, int HighTime, int LowTime){
+  digitalWrite(pin, HIGH);
+  delay(HighTime);
+  digitalWrite(pin, LOW);
+  delay(LowTime);
+}
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(9600);
+  Serial.println("Starting Program");
+  pinMode(BlueLedPin, OUTPUT);
+  Serial.println("Pin Configured");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  LaserPulse(BlueLedPin, 10, 7000);
 }
