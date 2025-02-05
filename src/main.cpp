@@ -3,21 +3,22 @@
 #define LED 2
 
 // put function declarations here:
+int BlueLedPin = 2;
 
+void LaserPulse(int pin, int HighTime, int LowTime){
+  digitalWrite(pin, HIGH);
+  delay(HighTime);
+  digitalWrite(pin, LOW);
+  delay(LowTime);
+}
 
 void setup() {
-  // put your setup code here, to run once:
-  pinMode(LED, OUTPUT);
-
+  Serial.begin(9600);
+  Serial.println("Starting Program");
+  pinMode(BlueLedPin, OUTPUT);
+  Serial.println("Pin Configured");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  digitalWrite(LED, HIGH);
-  delay(500);
-  digitalWrite(LED, LOW);
-  delay(500);
-
+  LaserPulse(BlueLedPin, 10, 7000);
 }
-
-// put function definitions here:
