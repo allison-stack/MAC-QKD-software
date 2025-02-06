@@ -1,23 +1,41 @@
-#include <Arduino.h>
+#include <WiFi.h>
+#include "time.h"
 
 #define LED 2
 
-// put function declarations here:
+const char* ssid       = "";
+const char* password   = "";
 
+const char* ntpServer = "pool.ntp.org";
+const long  gmtOffset_sec = 3600;
+const int   daylightOffset_sec = 3600;
 
-void setup() {
-  // put your setup code here, to run once:
+void setup()
+{
+  Serial.begin(921600);
+
   pinMode(LED, OUTPUT);
 
+  WiFi.begin(ssid, password);
+  
+  Serial.println("starting");
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  digitalWrite(LED, HIGH);
-  delay(100);
-  digitalWrite(LED, LOW);
-  delay(100);
+bool isConnected = false;
 
+void loop()
+{
+  if (WiFi.status() == WL_CONNECTED && !isConnected) {
+    Serial.println("Connected");
+    digitalWrite(LED, HIGH);
+    isConnected = true;
+    
+  }
+
+  if (WiFi.status() != WL_CONNECTED){
+    Serial.println(".");
+    digitalWrite(LED, !digitalRead(LED));
+    delay(1000);
+    isConnected = false;
+  }
 }
-
-// put function definitions here:
